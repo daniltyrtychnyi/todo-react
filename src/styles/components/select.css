@@ -1,0 +1,92 @@
+.select__original-control {
+    padding-inline: 0;
+}
+
+.select__body {
+    position: relative;
+}
+
+.select__button,
+.select__option {
+    user-select: none;
+    cursor: pointer;
+
+    * {
+        pointer-events: none;
+    }
+}
+
+.select__button {
+    padding-inline: 10px;
+    justify-content: space-between;
+    column-gap: 10px;
+    min-width: 93px;
+    transition-duration: var(--transition-duration);
+
+    &::after {
+        content: '';
+        width: 10px;
+        height: 10px;
+        background: url('../../assets/icons/icon-arrow_light.svg') center/contain no-repeat;
+        transition-duration: inherit;
+    }
+
+    &.is-expanded {
+        &::after {
+            rotate: -180deg;
+        }
+    }
+}
+
+.select__dropdown {
+    position: absolute;
+    top: 100%;
+    z-index: 10;
+    display: grid;
+    min-width: 93px;
+    width: 100%;
+    font-weight: 400;
+    color: var(--color-accent);
+    background-color: var(--color-light);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    transition-duration: var(--transition-duration);
+    transform-origin: top;
+
+    &:not(.is-expanded) {
+        opacity: 0;
+        visibility: hidden;
+        scale: 0;
+    }
+}
+
+.select__option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 4px;
+    min-width: inherit;
+    border: 1px solid transparent;
+    border-radius: inherit;
+
+    &.is-selected {
+        background-color: rgba(108, 99, 255, 0.2);
+    }
+
+    &.is-current,
+    &:hover {
+        border-color: var(--color-accent);
+    }
+}
+
+@media (min-width: 768px) {
+    .select__original-control {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .select__body {
+        display: none;
+    }
+}

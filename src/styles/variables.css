@@ -1,0 +1,38 @@
+:root {
+    --color-light: #F7F7F7;
+    --color-dark: #252525;
+    --color-grey: #CDCDCD;
+    --color-grey-light: #666666;
+    --color-accent: #6C63FF;
+    --color-accent-dark: #534CC2;
+    --color-accent-light: #C3C1E5;
+    --color-red: #E50000;
+
+    --color-bg: var(--color-light);
+    
+    --color-text: var(--color-dark);
+
+    --color-field: var(--color-accent-light);
+    --color-field-text: var(--color-accent);
+    --color-field-border: var(--color-accent);
+
+    --color-outline: var(--color-dark);
+
+    --border: 1px solid var(--color-accent);
+    --border-radius: 5px;
+
+    --border-field: 1px solid var(--color-field-border);
+
+    --box-shadow: 0 0 4px 0 var(--color-accent);
+
+    --font-family-base: 'Kanit', sans-serif;
+    --font-family-accent: 'Inter', sans-serif;
+
+    --input-height: 38px;
+
+    --transition-duration: 0.2s;
+
+    /*--empty-message-image: url('./images/empty-message.svg');*/
+
+    --icon-theme-switcher: url('../assets/icons/icon-theme-switcher_light.svg');
+}

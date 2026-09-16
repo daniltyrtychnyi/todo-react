@@ -1,0 +1,67 @@
+html.is-dark-theme {
+    --color-bg: var(--color-dark);
+
+    --color-text: var(--color-light);
+
+    --color-border: var(--color-light);
+
+    --color-outline: var(--color-light);
+
+    --color-field: var(--color-grey-light);
+    --color-field-text: var(--color-light);
+    --color-field-border: var(--color-light);
+
+    --empty-message-image: url('../assets/images/empty-message_dark.svg');
+
+    --icon-theme-switcher: url('../assets/icons/icon-theme-switcher_dark.svg');
+
+    .field__input[type="search"] {
+        &:placeholder-shown {
+            background-image: url('../assets/icons/icon-search_white.svg');
+        }
+    }
+
+    .overlay {
+        border-color: var(--color-border);
+    }
+}
+
+body {
+    font-family: var(--font-family-base);
+    font-weight: 500;
+    line-height: 1;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    min-height: 710px;
+}
+
+label,
+input,
+select,
+button {
+    transition-duration: var(--transition-duration);
+}
+
+:focus-visible {
+    outline: 2px dashed var(--color-outline);
+    outline-offset: 4px;
+    transition-duration: 0s !important;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path: inset(100%);
+    overflow: hidden;
+}

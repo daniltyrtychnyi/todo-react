@@ -1,0 +1,60 @@
+.overlay {
+    margin-top: 118px;
+    padding: 18px 30px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid transparent;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    transition-duration: var(--transition-duration);
+    transition-behavior: allow-discrete;
+    scale: 1;
+    transform-origin: top;
+
+    @starting-style {
+        scale: 0;
+    }
+
+    &:not([open]) {
+        scale: 0;
+    }
+
+    &::backdrop {
+        background: rgba(37, 37, 37, 0.7);
+    }
+
+    &:modal {
+        overflow: hidden;
+    }
+}
+
+.overlay__title {
+    font-size: 24px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.overlay__new-task-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 253px;
+}
+
+.overlay__actions {
+    display: flex;
+    justify-content: space-between;
+
+    * {
+        user-select: none;
+    }
+}
+
+
+@media (max-width: 767px) {
+    .overlay {
+        max-width: 300px;
+    }
+}
