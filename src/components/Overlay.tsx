@@ -1,26 +1,69 @@
 import '../styles/components/overlay.css'
-import Field from './Field'
+import {useRef, useEffect, } from 'react'
+import TaskForm from './TaskForm'
+import type { MouseEvent, RefObject } from 'react'
 
-export default () => {
+type OverlayProps = {
+    isDialogOpen: boolean,
+    newTaskTitle: string,
+    setNewTaskTitle: (newTaskTitle: string) => void,
+    addTask: () => void,
+    fieldInputRef: RefObject<HTMLInputElement | null>
+    editTask: (id: string) => void,
+    editingTaskId: string | null,
+    closeDialog: () => void,
+}
+
+export default (props: OverlayProps) => {
+    const {
+        isDialogOpen,
+        newTaskTitle,
+        setNewTaskTitle,
+        addTask,
+        fieldInputRef,
+        editTask,
+        editingTaskId,
+        closeDialog,
+    } = props
+
+    const dialogRef = useRef<HTMLDialogElement>(null)
+
+    useEffect(() => {
+        if (isDialogOpen) {
+            dialogRef.current?.showModal()
+        } else {
+            dialogRef.current?.close()
+        }
+    }, [isDialogOpen])
+
+    const outsideClick = (event: MouseEvent) => {
+        const isDialog = event.target === event.currentTarget
+
+        if (isDialog) {
+            closeDialog()
+        }
+    }
+
     return (
-        <dialog className="overlay" aria-labelledby="new-task-title" data-js-overlay="">
-            <h2 className="overlay__title" id="new-task-title">New Note</h2>
-            <form className="overlay__new-task-form" data-js-overlay-new-task-form="">
-                <Field
-                    id="new-task"
-                    label="Input your note..."
-                    extraAttrs={{
-                        'data-js-overlay-new-task-input': '',
-                    }}
-                />
-                <div className="overlay__actions">
-                    <button className="overlay__cancel-button button button--transparent" type="button"
-                            data-js-overlay-new-task-cancel-button="">
-                        Cancel
-                    </button>
-                    <button className="overlay__apply-button button" type="submit">Apply</button>
-                </div>
-            </form>
+        <dialog
+            className="overlay"
+            aria-labelledby="new-task-title"
+            onClose={() => closeDialog()}
+            onClick={outsideClick}
+            ref={dialogRef}
+        >
+            <h2 className="overlay__title" id="new-task-title">
+                {editingTaskId ? 'Edit note' : 'New Note'}
+            </h2>
+            <TaskForm
+                newTaskTitle={newTaskTitle}
+                setNewTaskTitle={setNewTaskTitle}
+                addTask={addTask}
+                ref={fieldInputRef}
+                editTask={editTask}
+                editingTaskId={editingTaskId}
+                closeDialog={closeDialog}
+            />
         </dialog>
     )
 }

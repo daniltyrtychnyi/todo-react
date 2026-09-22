@@ -1,10 +1,13 @@
 import '../styles/components/field.css'
+import type { ChangeEvent, RefObject } from 'react'
 
 type FieldProps = {
     id: string,
     type?: 'search',
     label: string,
-    extraAttrs: Record<string, string>,
+    value?: string,
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
+    ref?: RefObject<HTMLInputElement | null>,
 }
 
 export default (props: FieldProps) => {
@@ -12,7 +15,9 @@ export default (props: FieldProps) => {
         id,
         type = 'text',
         label,
-        extraAttrs,
+        value,
+        onChange,
+        ref,
     } = props
 
     return (
@@ -29,7 +34,9 @@ export default (props: FieldProps) => {
                 className="field__input"
                 placeholder=" "
                 autoComplete="off"
-                {...extraAttrs}
+                value={value}
+                onChange={onChange}
+                ref={ref}
             />
         </div>
     )

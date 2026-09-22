@@ -1,25 +1,63 @@
 import TodoControls from './TodoControls'
 import TodoList from './TodoList'
 import Button from './Button'
+import type {Task} from '../types'
+import clsx from 'clsx'
 
-export default () => {
+type TodoProps = {
+    setIsDialogOpen: (isOpen: boolean) => void,
+    tasks: Task[],
+    onChange: (id: string) => void,
+    deleteTask: (id: string) => void,
+    setNewTaskTitle: (newTaskTitle: string) => void,
+    setEditingTaskId: (newEditingTaskId: string) => void,
+    searchQuery: string,
+    setSearchQuery: (searchQuery: string) => void,
+    filterTasksBySearch: Task[] | null,
+}
+
+export default (props: TodoProps) => {
+    const {
+        setIsDialogOpen,
+        tasks,
+        onChange,
+        deleteTask,
+        setNewTaskTitle,
+        setEditingTaskId,
+        searchQuery,
+        setSearchQuery,
+        filterTasksBySearch,
+    } = props
+
+    const isFilterTasksBySearchEmpty = filterTasksBySearch?.length === 0
+    const isTasksEmpty = tasks.length === 0
+    const hasTasks = isFilterTasksBySearchEmpty || isTasksEmpty
+
     return (
         <div className="todo">
             <h1 className="todo__title">
                 To Do List
             </h1>
-            <TodoControls/>
-            <TodoList/>
-            <div className="todo__empty-wrapper" data-js-todo-empty-message="">
-                Empty...
+            <TodoControls searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+            <TodoList
+                tasks={tasks}
+                onChange={onChange}
+                deleteTask={deleteTask}
+                setIsDialogOpen={setIsDialogOpen}
+                setNewTaskTitle={setNewTaskTitle}
+                setEditingTaskId={setEditingTaskId}
+                filterTasksBySearch={filterTasksBySearch}
+            />
+            <div className={clsx("todo__empty-wrapper", {
+                'is-visible': hasTasks,
+            })}>
+                {hasTasks && 'Empty...'}
             </div>
             <Button
                 className="todo__new-task-button"
                 mode="circle"
                 label="New Task"
-                extraAttrs={{
-                    'data-js-todo-new-task-button': '',
-                }}
+                onClick={() => setIsDialogOpen(true)}
             >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fillRule="evenodd" clipRule="evenodd"

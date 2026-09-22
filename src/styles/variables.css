@@ -32,7 +32,7 @@
 
     --transition-duration: 0.2s;
 
-    /*--empty-message-image: url('./images/empty-message.svg');*/
+    --empty-message-image: url('../assets/images/empty-message.svg');
 
     --icon-theme-switcher: url('../assets/icons/icon-theme-switcher_light.svg');
 }

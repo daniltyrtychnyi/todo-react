@@ -1,33 +1,98 @@
 import '../styles/components/todo-item.css'
+import type {Task} from '../types'
+import { useState } from 'react'
+import clsx from 'clsx'
 
-export default () => {
+type TodoItemProps = {
+    task: Task,
+    onChange: (id: string) => void,
+    deleteTask: (id: string) => void,
+    setIsDialogOpen: (isOpen: boolean) => void,
+    setNewTaskTitle: (title: string) => void,
+    setEditingTaskId: (id: string) => void,
+}
+
+export default (props: TodoItemProps) => {
+    const {
+        task,
+        onChange,
+        deleteTask,
+        setIsDialogOpen,
+        setNewTaskTitle,
+        setEditingTaskId,
+    } = props
+
+    const {
+        id,
+        title,
+        isDone,
+    } = task
+
+    const [isDeletingTask, setIsDeletingTask] = useState<boolean>(false)
+
+    const onTransitionEnd = () => {
+        if (isDeletingTask) {
+            deleteTask(id)
+        }
+    }
+
+    const onEditClick = () => {
+        setIsDialogOpen(true)
+        setNewTaskTitle(title)
+        setEditingTaskId(id)
+    }
+
     return (
-        <li className="todo__item todo-item" data-js-todo-item="">
-            <input id="${id}" className="todo-item__checkbox" type="checkbox"
-                   data-js-todo-item-checkbox=""/>
-            <label htmlFor="${id}" className="todo-item__label"
-                   data-js-todo-item-label=""></label>
-            <div className="todo-item__actions" data-js-todo-item-actions>
-                <button className="todo-item__edit-button" type="button" aria-label="Edit task" title="Edit task"
-                        data-js-todo-item-edit-button>
+        <li
+            className={clsx("todo__item todo-item", {
+                'is-disappearing': isDeletingTask,
+            })}
+            onTransitionEnd={onTransitionEnd}
+        >
+            <input
+                id={id}
+                className="todo-item__checkbox"
+                type="checkbox"
+                checked={isDone}
+                onChange={() => onChange(id)}
+            />
+            <label
+                htmlFor={id}
+                className="todo-item__label"
+            >
+                {title}
+            </label>
+            <div className="todo-item__actions">
+                <button
+                    className="todo-item__edit-button"
+                    type="button"
+                    aria-label="Edit task"
+                    title="Edit task"
+                    onClick={onEditClick}
+                >
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M12.0091 9.32736L14.4018 6.93468L14.4025 6.93398C14.7324 6.60414 14.8974 6.43916 14.9592 6.24885C15.0136 6.08133 15.0136 5.90088 14.9592 5.73337C14.8973 5.54292 14.7321 5.37769 14.4018 5.04738L12.9506 3.59625C12.6217 3.26735 12.4569 3.10257 12.2669 3.04082C12.0993 2.98639 11.9189 2.98639 11.7514 3.04082C11.5612 3.10261 11.3962 3.26759 11.0669 3.59695L11.0654 3.59837L8.67272 5.99106L2 12.6637V16H5.33636L12.0091 9.32736ZM8.67272 5.99106L12.0091 9.32736"
-                            stroke="#CDCDCD" stroke-linecap="round" stroke-linejoin="round"/>
+                            stroke="#CDCDCD" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                 </button>
-                <button className="todo-item__delete-button" type="button" aria-label="Delete task"
-                        title="Delete task" data-js-todo-item-delete-button="">
+                <button
+                    className="todo-item__delete-button"
+                    type="button"
+                    aria-label="Delete task"
+                    title="Delete task"
+                    onClick={() => setIsDeletingTask(true)}
+                >
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M3.87414 7.61505C3.80712 6.74386 4.49595 6 5.36971 6H12.63C13.5039 6 14.1927 6.74385 14.1257 7.61505L13.6064 14.365C13.5463 15.1465 12.8946 15.75 12.1108 15.75H5.88894C5.10514 15.75 4.45348 15.1465 4.39336 14.365L3.87414 7.61505Z"
                             stroke="#CDCDCD"/>
-                        <path d="M14.625 3.75H3.375" stroke="#CDCDCD" stroke-linecap="round"/>
+                        <path d="M14.625 3.75H3.375" stroke="#CDCDCD" strokeLinecap="round"/>
                         <path
                             d="M7.5 2.25C7.5 1.83579 7.83577 1.5 8.25 1.5H9.75C10.1642 1.5 10.5 1.83579 10.5 2.25V3.75H7.5V2.25Z"
                             stroke="#CDCDCD"/>
-                        <path d="M10.5 9V12.75" stroke="#CDCDCD" stroke-linecap="round"/>
-                        <path d="M7.5 9V12.75" stroke="#CDCDCD" stroke-linecap="round"/>
+                        <path d="M10.5 9V12.75" stroke="#CDCDCD" strokeLinecap="round"/>
+                        <path d="M7.5 9V12.75" stroke="#CDCDCD" strokeLinecap="round"/>
                     </svg>
                 </button>
             </div>

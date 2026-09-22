@@ -8,7 +8,7 @@ type ButtonProps = {
     mode?: 'switcher' | 'circle' | 'transparent',
     label?: string,
     children?: ReactNode,
-    extraAttrs: Record<string, string>,
+    onClick?: () => void,
 }
 
 export default (props: ButtonProps) => {
@@ -18,7 +18,7 @@ export default (props: ButtonProps) => {
         mode,
         label,
         children,
-        extraAttrs,
+        onClick,
     } = props
 
     return (
@@ -29,7 +29,7 @@ export default (props: ButtonProps) => {
             type={type}
             aria-label={label}
             title={label}
-            {...extraAttrs}
+            onClick={onClick}
         >
             <span className="button__icon">
                 {children}

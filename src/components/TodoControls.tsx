@@ -2,18 +2,25 @@ import SearchTaskForm from './SearchTaskForm'
 import Select from './Select'
 import Button from './Button'
 
-export default () => {
+type TodoControlsProps = {
+    searchQuery: string,
+    setSearchQuery: (searchQuery: string) => void,
+}
+
+export default (props: TodoControlsProps) => {
+    const {
+        searchQuery,
+        setSearchQuery,
+    } = props
+
     return (
         <div className="todo__controls">
-            <SearchTaskForm/>
+            <SearchTaskForm searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
             <Select />
             <Button
                 mode="switcher"
                 type="button"
                 label="Switch theme"
-                extraAttrs={{
-                    'data-js-theme-switcher': '',
-                }}
             />
         </div>
     )
