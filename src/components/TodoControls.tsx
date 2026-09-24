@@ -1,13 +1,14 @@
 import SearchTaskForm from './SearchTaskForm'
 import Select from './Select'
 import Button from './Button'
+import { memo } from 'react'
 
 type TodoControlsProps = {
     searchQuery: string,
     setSearchQuery: (searchQuery: string) => void,
 }
 
-export default (props: TodoControlsProps) => {
+export default memo((props: TodoControlsProps) => {
     const {
         searchQuery,
         setSearchQuery,
@@ -24,4 +25,4 @@ export default (props: TodoControlsProps) => {
             />
         </div>
     )
-}
+})

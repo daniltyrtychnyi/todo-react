@@ -1,6 +1,6 @@
 import '../styles/components/todo-item.css'
 import type {Task} from '../types'
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import clsx from 'clsx'
 
 type TodoItemProps = {
@@ -12,7 +12,7 @@ type TodoItemProps = {
     setEditingTaskId: (id: string) => void,
 }
 
-export default (props: TodoItemProps) => {
+export default memo((props: TodoItemProps) => {
     const {
         task,
         onChange,
@@ -98,4 +98,4 @@ export default (props: TodoItemProps) => {
             </div>
         </li>
     )
-}
+})

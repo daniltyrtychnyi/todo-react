@@ -3,6 +3,7 @@ import TodoList from './TodoList'
 import Button from './Button'
 import type {Task} from '../types'
 import clsx from 'clsx'
+import {memo} from 'react'
 
 type TodoProps = {
     setIsDialogOpen: (isOpen: boolean) => void,
@@ -16,7 +17,7 @@ type TodoProps = {
     filterTasksBySearch: Task[] | null,
 }
 
-export default (props: TodoProps) => {
+export default memo((props: TodoProps) => {
     const {
         setIsDialogOpen,
         tasks,
@@ -29,9 +30,7 @@ export default (props: TodoProps) => {
         filterTasksBySearch,
     } = props
 
-    const isFilterTasksBySearchEmpty = filterTasksBySearch?.length === 0
-    const isTasksEmpty = tasks.length === 0
-    const hasTasks = isFilterTasksBySearchEmpty || isTasksEmpty
+    const isEmpty = filterTasksBySearch?.length === 0 || tasks.length === 0
 
     return (
         <div className="todo">
@@ -49,9 +48,10 @@ export default (props: TodoProps) => {
                 filterTasksBySearch={filterTasksBySearch}
             />
             <div className={clsx("todo__empty-wrapper", {
-                'is-visible': hasTasks,
-            })}>
-                {hasTasks && 'Empty...'}
+                'is-visible': isEmpty,
+            })}
+            >
+                {isEmpty && 'Empty...'}
             </div>
             <Button
                 className="todo__new-task-button"
@@ -67,4 +67,4 @@ export default (props: TodoProps) => {
             </Button>
         </div>
     )
-}
+})

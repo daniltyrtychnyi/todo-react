@@ -1,5 +1,5 @@
 import '../styles/components/overlay.css'
-import {useRef, useEffect, } from 'react'
+import {useRef, useEffect, memo} from 'react'
 import TaskForm from './TaskForm'
 import type { MouseEvent, RefObject } from 'react'
 
@@ -14,7 +14,7 @@ type OverlayProps = {
     closeDialog: () => void,
 }
 
-export default (props: OverlayProps) => {
+export default memo((props: OverlayProps) => {
     const {
         isDialogOpen,
         newTaskTitle,
@@ -48,7 +48,7 @@ export default (props: OverlayProps) => {
         <dialog
             className="overlay"
             aria-labelledby="new-task-title"
-            onClose={() => closeDialog()}
+            onClose={closeDialog}
             onClick={outsideClick}
             ref={dialogRef}
         >
@@ -66,4 +66,4 @@ export default (props: OverlayProps) => {
             />
         </dialog>
     )
-}
+})

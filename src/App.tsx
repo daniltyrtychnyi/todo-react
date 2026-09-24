@@ -1,7 +1,7 @@
 import './styles/components/todo.css'
 import Todo from './components/Todo'
 import Overlay from './components/Overlay'
-import {useState, useRef, useEffect} from 'react'
+import {useState, useRef, useEffect, useCallback, useMemo} from 'react'
 import type {Task} from './types'
 
 function App() {
@@ -24,43 +24,33 @@ function App() {
 
     const fieldInputRef = useRef<HTMLInputElement>(null)
 
-    const closeDialog = () => {
+    const closeDialog = useCallback(() => {
         setIsDialogOpen(false)
         setNewTaskTitle('')
         setEditingTaskId(null)
-    }
+    }, [])
 
-    const getValidTitle = () => {
-        const clearTitle = newTaskTitle.trim()
+    const addTask = useCallback(() => {
+        const clearNewTaskTitle = newTaskTitle.trim()
 
-        if (clearTitle.length === 0) {
+        if (clearNewTaskTitle.length === 0) {
             fieldInputRef.current?.focus()
 
-            return null
-        }
-
-        return clearTitle
-    }
-
-    const addTask = () => {
-        const title = getValidTitle()
-
-        if (!title) {
             return
         }
 
         const newTask = {
             id: crypto?.randomUUID() ?? Date.now().toString(),
-            title,
+            title: clearNewTaskTitle,
             isDone: false,
         }
 
         setTasks((prevTasks) => [...prevTasks, newTask])
         setSearchQuery('')
         closeDialog()
-    }
+    }, [newTaskTitle, closeDialog])
 
-    const toggleTask = (taskId: string) => {
+    const toggleTask = useCallback((taskId: string) => {
         setTasks((prevTasks) => (
             prevTasks.map((prevTask) => {
                 if (prevTask.id === taskId) {
@@ -73,12 +63,14 @@ function App() {
                 return prevTask
             })
         ))
-    }
+    }, [])
 
-    const editTask = (taskId: string) => {
-        const title = getValidTitle()
+    const editTask = useCallback((taskId: string) => {
+        const clearNewTaskTitle = newTaskTitle.trim()
 
-        if (!title) {
+        if (clearNewTaskTitle.length === 0) {
+            fieldInputRef.current?.focus()
+
             return
         }
 
@@ -87,7 +79,7 @@ function App() {
                 if (prevTask.id === taskId) {
                     return {
                         ...prevTask,
-                        title,
+                        title: clearNewTaskTitle,
                     }
                 }
 
@@ -96,18 +88,22 @@ function App() {
         ))
 
         closeDialog()
-    }
+    }, [newTaskTitle, closeDialog])
 
-    const deleteTask = (taskId: string) => {
+    const deleteTask = useCallback((taskId: string) => {
         setTasks((prevTasks) => (
             prevTasks.filter((prevTask) => prevTask.id !== taskId)
         ))
-    }
+    }, [])
 
-    const clearSearchQuery = searchQuery.trim().toLowerCase()
-    const filterTasksBySearch = clearSearchQuery.length > 0
-        ? tasks.filter(({title}) => title.toLowerCase().includes(clearSearchQuery))
-        : null
+    const filterTasksBySearch = useMemo(() => {
+        const clearSearchQuery = searchQuery.trim().toLowerCase()
+
+        return clearSearchQuery.length > 0
+            ? tasks.filter(({title}) => title.toLowerCase().includes(clearSearchQuery))
+            : null
+    }, [searchQuery, tasks])
+
 
     useEffect(() => {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(tasks))

@@ -1,5 +1,6 @@
 import TodoItem from './TodoItem'
 import type { Task } from '../types'
+import { memo } from 'react'
 
 type TodoListProps = {
     tasks: Task[],
@@ -11,7 +12,7 @@ type TodoListProps = {
     filterTasksBySearch: Task[] | null,
 }
 
-export default (props: TodoListProps) => {
+export default memo((props: TodoListProps) => {
     const {
         tasks,
         onChange,
@@ -37,4 +38,4 @@ export default (props: TodoListProps) => {
             ))}
         </ul>
     )
-}
+})

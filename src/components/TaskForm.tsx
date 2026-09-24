@@ -50,7 +50,7 @@ export default (props: TaskFormProps) => {
                 <button
                     className="overlay__cancel-button button button--transparent"
                     type="button"
-                    onClick={() => closeDialog()}
+                    onClick={closeDialog}
                 >
                     Cancel
                 </button>
