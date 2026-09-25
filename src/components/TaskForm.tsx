@@ -1,26 +1,23 @@
 import Field from './Field'
-import type { SubmitEvent, RefObject } from 'react'
+import {type SubmitEvent, useContext} from 'react'
+import {TasksContext} from '../context/TasksContext'
 
-type TaskFormProps = {
-    addTask: () => void,
-    newTaskTitle: string,
-    setNewTaskTitle: (newTaskTitle: string) => void,
-    ref: RefObject<HTMLInputElement | null>,
-    editTask: (id: string) => void,
-    editingTaskId: string | null,
-    closeDialog: () => void,
-}
+export default () => {
+    const context = useContext(TasksContext)
 
-export default (props: TaskFormProps) => {
+    if (!context) {
+        throw new Error('TasksContext must be used with in TasksProvider')
+    }
+
     const {
         newTaskTitle,
         setNewTaskTitle,
         addTask,
-        ref,
         editTask,
         editingTaskId,
         closeDialog,
-    } = props
+        fieldInputRef,
+    } = context
 
     const onSubmit = (event: SubmitEvent) => {
         event.preventDefault()
@@ -44,7 +41,7 @@ export default (props: TaskFormProps) => {
                 label="Input your note..."
                 value={newTaskTitle}
                 onChange={(event) => setNewTaskTitle(event.target.value)}
-                ref={ref}
+                ref={fieldInputRef}
             />
             <div className="overlay__actions">
                 <button

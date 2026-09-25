@@ -1,30 +1,21 @@
 import '../styles/components/overlay.css'
-import {useRef, useEffect, memo} from 'react'
+import {useRef, useEffect, memo, useContext} from 'react'
 import TaskForm from './TaskForm'
-import type { MouseEvent, RefObject } from 'react'
+import type { MouseEvent } from 'react'
+import {TasksContext} from '../context/TasksContext'
 
-type OverlayProps = {
-    isDialogOpen: boolean,
-    newTaskTitle: string,
-    setNewTaskTitle: (newTaskTitle: string) => void,
-    addTask: () => void,
-    fieldInputRef: RefObject<HTMLInputElement | null>
-    editTask: (id: string) => void,
-    editingTaskId: string | null,
-    closeDialog: () => void,
-}
+export default memo(() => {
+    const context = useContext(TasksContext)
 
-export default memo((props: OverlayProps) => {
+    if (!context) {
+        throw new Error('TasksContext must be used with in TasksProvider')
+    }
+
     const {
         isDialogOpen,
-        newTaskTitle,
-        setNewTaskTitle,
-        addTask,
-        fieldInputRef,
-        editTask,
-        editingTaskId,
         closeDialog,
-    } = props
+        editingTaskId,
+    } = context
 
     const dialogRef = useRef<HTMLDialogElement>(null)
 
@@ -55,15 +46,7 @@ export default memo((props: OverlayProps) => {
             <h2 className="overlay__title" id="new-task-title">
                 {editingTaskId ? 'Edit note' : 'New Note'}
             </h2>
-            <TaskForm
-                newTaskTitle={newTaskTitle}
-                setNewTaskTitle={setNewTaskTitle}
-                addTask={addTask}
-                ref={fieldInputRef}
-                editTask={editTask}
-                editingTaskId={editingTaskId}
-                closeDialog={closeDialog}
-            />
+            <TaskForm />
         </dialog>
     )
 })

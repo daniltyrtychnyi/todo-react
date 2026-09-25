@@ -1,25 +1,16 @@
 import '../styles/components/todo-item.css'
 import type {Task} from '../types'
-import { useState, memo } from 'react'
+import { useState, memo, useContext } from 'react'
 import clsx from 'clsx'
+import { TasksContext } from '../context/TasksContext'
 
 type TodoItemProps = {
     task: Task,
-    onChange: (id: string) => void,
-    deleteTask: (id: string) => void,
-    setIsDialogOpen: (isOpen: boolean) => void,
-    setNewTaskTitle: (title: string) => void,
-    setEditingTaskId: (id: string) => void,
 }
 
 export default memo((props: TodoItemProps) => {
     const {
         task,
-        onChange,
-        deleteTask,
-        setIsDialogOpen,
-        setNewTaskTitle,
-        setEditingTaskId,
     } = props
 
     const {
@@ -27,6 +18,20 @@ export default memo((props: TodoItemProps) => {
         title,
         isDone,
     } = task
+
+    const context = useContext(TasksContext)
+
+    if (!context) {
+        throw new Error('TasksContext must be used in TasksProvider')
+    }
+
+    const {
+        deleteTask,
+        setIsDialogOpen,
+        toggleTask,
+        setNewTaskTitle,
+        setEditingTaskId,
+    } = context
 
     const [isDeletingTask, setIsDeletingTask] = useState<boolean>(false)
 
@@ -54,7 +59,7 @@ export default memo((props: TodoItemProps) => {
                 className="todo-item__checkbox"
                 type="checkbox"
                 checked={isDone}
-                onChange={() => onChange(id)}
+                onChange={() => toggleTask(id)}
             />
             <label
                 htmlFor={id}

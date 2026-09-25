@@ -5,8 +5,8 @@ type FieldProps = {
     id: string,
     type?: 'search',
     label: string,
-    value?: string,
-    onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
+    value: string,
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void,
     ref?: RefObject<HTMLInputElement | null>,
 }
 

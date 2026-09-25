@@ -1,27 +1,19 @@
 import TodoItem from './TodoItem'
-import type { Task } from '../types'
 import { memo } from 'react'
+import { useContext } from 'react'
+import { TasksContext } from '../context/TasksContext'
 
-type TodoListProps = {
-    tasks: Task[],
-    onChange: (id: string) => void,
-    deleteTask: (id: string) => void,
-    setIsDialogOpen: (open: boolean) => void,
-    setNewTaskTitle: (title: string) => void,
-    setEditingTaskId: (editingTaskId: string) => void,
-    filterTasksBySearch: Task[] | null,
-}
+export default memo(() => {
+    const context = useContext(TasksContext)
 
-export default memo((props: TodoListProps) => {
+    if (!context) {
+        throw new Error('TasksContext must be used in TasksProvider')
+    }
+
     const {
         tasks,
-        onChange,
-        deleteTask,
-        setIsDialogOpen,
-        setNewTaskTitle,
-        setEditingTaskId,
         filterTasksBySearch,
-    } = props
+    } = context
 
     return (
         <ul className="todo__list">
@@ -29,11 +21,6 @@ export default memo((props: TodoListProps) => {
                 <TodoItem
                     task={task}
                     key={task.id}
-                    onChange={onChange}
-                    deleteTask={deleteTask}
-                    setIsDialogOpen={setIsDialogOpen}
-                    setNewTaskTitle={setNewTaskTitle}
-                    setEditingTaskId={setEditingTaskId}
                 />
             ))}
         </ul>

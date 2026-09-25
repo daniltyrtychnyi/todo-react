@@ -1,18 +1,21 @@
 import Field from './Field'
+import { useContext } from 'react'
+import { TasksContext } from '../context/TasksContext'
 
-type SearchTaskFormProps = {
-    searchQuery: string,
-    setSearchQuery: (searchQuery: string) => void,
-}
+export default () => {
+    const context = useContext(TasksContext)
 
-export default (props: SearchTaskFormProps) => {
+    if (!context) {
+        throw new Error('Tasks')
+    }
+
     const {
         searchQuery,
         setSearchQuery,
-    } = props
+    } = context
 
     return (
-        <form className="todo__search-task-form" data-js-todo-search-task-form>
+        <form className="todo__search-task-form">
             <Field
                 id="search-task"
                 type="search"
