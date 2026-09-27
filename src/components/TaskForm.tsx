@@ -1,5 +1,6 @@
 import Field from './Field'
-import {type SubmitEvent, useContext} from 'react'
+import {useContext} from 'react'
+import type {SubmitEvent, ChangeEvent} from 'react'
 import {TasksContext} from '../context/TasksContext'
 
 export default () => {
@@ -17,18 +18,35 @@ export default () => {
         editingTaskId,
         closeDialog,
         fieldInputRef,
+        error,
+        setError,
     } = context
 
     const onSubmit = (event: SubmitEvent) => {
         event.preventDefault()
 
-        if (!editingTaskId) {
-            addTask()
+        const clearTitle = newTaskTitle.trim()
+
+        const success = editingTaskId
+            ? editTask(editingTaskId, clearTitle)
+            : addTask(clearTitle)
+
+        if (!success) {
+            fieldInputRef.current?.focus()
 
             return
         }
 
-        editTask(editingTaskId)
+        closeDialog()
+    }
+
+    const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const {value} = event.target
+        const clearValue = value.trim()
+        const isOnlySpaces = clearValue.length === 0 && value.length > 0
+
+        setNewTaskTitle(value)
+        setError(isOnlySpaces ? 'The task field cannot be empty.' : '')
     }
 
     return (
@@ -40,7 +58,8 @@ export default () => {
                 id="new-task"
                 label="Input your note..."
                 value={newTaskTitle}
-                onChange={(event) => setNewTaskTitle(event.target.value)}
+                error={error}
+                onChange={onChange}
                 ref={fieldInputRef}
             />
             <div className="overlay__actions">

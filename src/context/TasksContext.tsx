@@ -2,24 +2,27 @@ import { createContext } from 'react'
 import type { ReactNode, RefObject, Dispatch, SetStateAction } from 'react'
 import type {Task} from '../types'
 import useTasks from '../hooks/useTasks'
+import useTaskDialog from '../hooks/useTaskDialog'
 
 type TasksContextValue = {
     tasks: Task[],
-    newTaskTitle: string,
-    setNewTaskTitle: (title: string) => void,
-    isDialogOpen: boolean,
-    setIsDialogOpen: Dispatch<SetStateAction<boolean>>,
-    editingTaskId: string | null,
-    setEditingTaskId: Dispatch<SetStateAction<string | null>>,
     searchQuery: string,
     setSearchQuery: Dispatch<SetStateAction<string>>,
-    fieldInputRef: RefObject<HTMLInputElement | null>,
-    closeDialog: () => void,
-    addTask: () => void,
+    addTask: (title: string) => boolean,
     toggleTask: (taskId: string) => void,
-    editTask: (taskId: string) => void,
+    editTask: (taskId: string, title: string) => boolean,
     deleteTask: (taskId: string) => void,
     filterTasksBySearch: Task[] | null,
+    isDialogOpen: boolean,
+    setIsDialogOpen: Dispatch<SetStateAction<boolean>>,
+    newTaskTitle: string,
+    setNewTaskTitle: Dispatch<SetStateAction<string>>,
+    editingTaskId: string | null,
+    setEditingTaskId: Dispatch<SetStateAction<string | null>>,
+    error: string,
+    setError: Dispatch<SetStateAction<string>>,
+    fieldInputRef: RefObject<HTMLInputElement | null>,
+    closeDialog: () => void,
 }
 
 type TasksProviderProps = {
@@ -33,16 +36,8 @@ export const TasksProvider = (props: TasksProviderProps) => {
 
     const {
         tasks,
-        newTaskTitle,
-        setNewTaskTitle,
-        isDialogOpen,
-        setIsDialogOpen,
-        editingTaskId,
-        setEditingTaskId,
         searchQuery,
         setSearchQuery,
-        fieldInputRef,
-        closeDialog,
         addTask,
         toggleTask,
         editTask,
@@ -50,25 +45,41 @@ export const TasksProvider = (props: TasksProviderProps) => {
         filterTasksBySearch,
     } = useTasks()
 
+    const {
+        isDialogOpen,
+        setIsDialogOpen,
+        newTaskTitle,
+        setNewTaskTitle,
+        editingTaskId,
+        setEditingTaskId,
+        error,
+        setError,
+        fieldInputRef,
+        closeDialog,
+    } = useTaskDialog()
+
+
     return (
         <TasksContext.Provider
             value={{
                 tasks,
-                newTaskTitle,
-                setNewTaskTitle,
-                isDialogOpen,
-                setIsDialogOpen,
-                editingTaskId,
-                setEditingTaskId,
                 searchQuery,
                 setSearchQuery,
-                fieldInputRef,
-                closeDialog,
                 addTask,
                 toggleTask,
                 editTask,
                 deleteTask,
                 filterTasksBySearch,
+                isDialogOpen,
+                setIsDialogOpen,
+                newTaskTitle,
+                setNewTaskTitle,
+                editingTaskId,
+                setEditingTaskId,
+                error,
+                setError,
+                fieldInputRef,
+                closeDialog,
             }}
         >
             {children}

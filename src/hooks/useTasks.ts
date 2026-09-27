@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useMemo, useEffect } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 import type { Task } from '../types'
 import useTasksLocalStorage from './useTasksLocalStorage'
 
@@ -9,39 +9,24 @@ const useTasks = () => {
     } = useTasksLocalStorage()
 
     const [tasks, setTasks] = useState<Task[]>(savedTasks ?? [])
-
-    const [newTaskTitle, setNewTaskTitle] = useState('')
-    const [isDialogOpen, setIsDialogOpen] = useState(false)
-    const [editingTaskId, setEditingTaskId] = useState<string | null>(null)
     const [searchQuery, setSearchQuery] = useState('')
 
-    const fieldInputRef = useRef<HTMLInputElement>(null)
-
-    const closeDialog = useCallback(() => {
-        setIsDialogOpen(false)
-        setNewTaskTitle('')
-        setEditingTaskId(null)
-    }, [])
-
-    const addTask = useCallback(() => {
-        const clearNewTaskTitle = newTaskTitle.trim()
-
-        if (clearNewTaskTitle.length === 0) {
-            fieldInputRef.current?.focus()
-
-            return
+    const addTask = useCallback((title: string) => {
+        if (title.length === 0) {
+            return false
         }
 
         const newTask = {
             id: crypto?.randomUUID() ?? Date.now().toString(),
-            title: clearNewTaskTitle,
+            title,
             isDone: false,
         }
 
         setTasks((prevTasks) => [...prevTasks, newTask])
         setSearchQuery('')
-        closeDialog()
-    }, [newTaskTitle, closeDialog])
+
+        return true
+    }, [])
 
     const toggleTask = useCallback((taskId: string) => {
         setTasks((prevTasks) => (
@@ -58,13 +43,9 @@ const useTasks = () => {
         ))
     }, [])
 
-    const editTask = useCallback((taskId: string) => {
-        const clearNewTaskTitle = newTaskTitle.trim()
-
-        if (clearNewTaskTitle.length === 0) {
-            fieldInputRef.current?.focus()
-
-            return
+    const editTask = useCallback((taskId: string, title: string) => {
+        if (title.length === 0) {
+            return false
         }
 
         setTasks((prevTasks) => (
@@ -72,7 +53,7 @@ const useTasks = () => {
                 if (prevTask.id === taskId) {
                     return {
                         ...prevTask,
-                        title: clearNewTaskTitle,
+                        title,
                     }
                 }
 
@@ -80,8 +61,8 @@ const useTasks = () => {
             })
         ))
 
-        closeDialog()
-    }, [newTaskTitle, closeDialog])
+        return true
+    }, [])
 
     const deleteTask = useCallback((taskId: string) => {
         setTasks((prevTasks) => (
@@ -103,16 +84,8 @@ const useTasks = () => {
 
     return {
         tasks,
-        newTaskTitle,
-        setNewTaskTitle,
-        isDialogOpen,
-        setIsDialogOpen,
-        editingTaskId,
-        setEditingTaskId,
         searchQuery,
         setSearchQuery,
-        fieldInputRef,
-        closeDialog,
         addTask,
         toggleTask,
         editTask,

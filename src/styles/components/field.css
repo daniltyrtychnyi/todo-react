@@ -49,6 +49,19 @@
     }
 }
 
+.field__error {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding-top: 10px;
+    font-size: 14px;
+    color: var(--color-red);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
 @media (max-width: 400px) {
     .todo__search-task-form .field__label {
         opacity: 0;

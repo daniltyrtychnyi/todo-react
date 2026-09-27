@@ -2,9 +2,10 @@ import type { ChangeEvent, RefObject } from 'react'
 
 type FieldProps = {
     id: string,
-    type?: 'search',
+    type?: 'search' | 'text',
     label: string,
     value: string,
+    error?: string,
     onChange: (event: ChangeEvent<HTMLInputElement>) => void,
     ref?: RefObject<HTMLInputElement | null>,
 }
@@ -15,6 +16,7 @@ export default (props: FieldProps) => {
         type = 'text',
         label,
         value,
+        error,
         onChange,
         ref,
     } = props
@@ -37,6 +39,14 @@ export default (props: FieldProps) => {
                 onChange={onChange}
                 ref={ref}
             />
+            {error && (
+                <span
+                    className="field__error"
+                    title={error}
+                >
+                    {error}
+                </span>
+            )}
         </div>
     )
 }
