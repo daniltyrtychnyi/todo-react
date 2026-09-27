@@ -7,7 +7,7 @@ type TodoItemProps = {
     task: Task,
 }
 
-export default memo((props: TodoItemProps) => {
+const TodoItem = (props: TodoItemProps) => {
     const {
         task,
     } = props
@@ -102,4 +102,6 @@ export default memo((props: TodoItemProps) => {
             </div>
         </li>
     )
-})
+}
+
+export default memo(TodoItem)

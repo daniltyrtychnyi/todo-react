@@ -1,4 +1,4 @@
-export default () => {
+const Select = () => {
     return (
         <div className="select">
             <label
@@ -65,3 +65,5 @@ export default () => {
         </div>
     )
 }
+
+export default Select

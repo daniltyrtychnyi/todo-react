@@ -3,7 +3,7 @@ import Select from './Select'
 import Button from './Button'
 import { memo } from 'react'
 
-export default memo(() => {
+const TodoControls =() => {
     return (
         <div className="todo__controls">
             <SearchTaskForm />
@@ -15,4 +15,6 @@ export default memo(() => {
             />
         </div>
     )
-})
+}
+
+export default  memo(TodoControls)

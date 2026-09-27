@@ -2,7 +2,7 @@ import Field from './Field'
 import { useContext } from 'react'
 import { TasksContext } from '../context/TasksContext'
 
-export default () => {
+const SearchTaskForm = () => {
     const context = useContext(TasksContext)
 
     if (!context) {
@@ -26,3 +26,5 @@ export default () => {
         </form>
     )
 }
+
+export default SearchTaskForm

@@ -3,7 +3,7 @@ import {useContext} from 'react'
 import type {SubmitEvent, ChangeEvent} from 'react'
 import {TasksContext} from '../context/TasksContext'
 
-export default () => {
+const TaskForm = () => {
     const context = useContext(TasksContext)
 
     if (!context) {
@@ -80,3 +80,5 @@ export default () => {
         </form>
     )
 }
+
+export default TaskForm

@@ -3,7 +3,7 @@ import TaskForm from './TaskForm'
 import type { MouseEvent } from 'react'
 import {TasksContext} from '../context/TasksContext'
 
-export default memo(() => {
+const Overlay = () => {
     const context = useContext(TasksContext)
 
     if (!context) {
@@ -50,4 +50,6 @@ export default memo(() => {
             </div>
         </dialog>
     )
-})
+}
+
+export default memo(Overlay)

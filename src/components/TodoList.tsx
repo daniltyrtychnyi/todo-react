@@ -3,7 +3,7 @@ import { memo } from 'react'
 import { useContext } from 'react'
 import { TasksContext } from '../context/TasksContext'
 
-export default memo(() => {
+const TodoList = () => {
     const context = useContext(TasksContext)
 
     if (!context) {
@@ -25,4 +25,6 @@ export default memo(() => {
             ))}
         </ul>
     )
-})
+}
+
+export default memo(TodoList)

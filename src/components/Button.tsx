@@ -10,7 +10,7 @@ type ButtonProps = {
     onClick?: () => void,
 }
 
-export default (props: ButtonProps) => {
+const Button = (props: ButtonProps) => {
     const {
         className,
         type = 'button',
@@ -36,3 +36,5 @@ export default (props: ButtonProps) => {
         </button>
     )
 }
+
+export default Button

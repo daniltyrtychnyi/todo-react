@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import { memo, useContext } from 'react'
 import { TasksContext } from '../context/TasksContext'
 
-export default memo(() => {
+const Todo = () => {
     const context = useContext(TasksContext)
 
     if (!context) {
@@ -51,4 +51,6 @@ export default memo(() => {
             </Button>
         </div>
     )
-})
+}
+
+export default memo(Todo)

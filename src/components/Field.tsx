@@ -10,7 +10,7 @@ type FieldProps = {
     ref?: RefObject<HTMLInputElement | null>,
 }
 
-export default (props: FieldProps) => {
+const Field = (props: FieldProps) => {
     const {
         id,
         type = 'text',
@@ -50,3 +50,5 @@ export default (props: FieldProps) => {
         </div>
     )
 }
+
+export default Field
