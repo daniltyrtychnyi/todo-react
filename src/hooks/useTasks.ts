@@ -1,15 +1,11 @@
-import { useState, useCallback, useMemo, useEffect } from 'react'
-import type { Task } from '../types'
-import useTasksLocalStorage from './useTasksLocalStorage'
+import {useState, useCallback, useMemo, useEffect} from 'react'
+import type {Task} from '../types'
+import tasksAPI from '../api/tasksAPI'
 
 const useTasks = () => {
-    const {
-        savedTasks,
-        saveTasks,
-    } = useTasksLocalStorage()
-
-    const [tasks, setTasks] = useState<Task[]>(savedTasks ?? [])
+    const [tasks, setTasks] = useState<Task[]>([])
     const [searchQuery, setSearchQuery] = useState('')
+    const [errorRequest, setErrorRequest] = useState('')
 
     const addTask = useCallback((title: string) => {
         if (title.length === 0) {
@@ -17,30 +13,41 @@ const useTasks = () => {
         }
 
         const newTask = {
-            id: crypto?.randomUUID() ?? Date.now().toString(),
             title,
             isDone: false,
         }
 
-        setTasks((prevTasks) => [...prevTasks, newTask])
-        setSearchQuery('')
+        tasksAPI.add(newTask)
+            .then((addedTask: Task) => {
+                setTasks((prevTasks) => [...prevTasks, addedTask])
+                setSearchQuery('')
+            })
+            .catch(() => {
+                setErrorRequest('Не удалось добавить задачу!')
+            })
 
         return true
     }, [])
 
-    const toggleTask = useCallback((taskId: string) => {
-        setTasks((prevTasks) => (
-            prevTasks.map((prevTask) => {
-                if (prevTask.id === taskId) {
-                    return {
-                        ...prevTask,
-                        isDone: !prevTask.isDone,
-                    }
-                }
+    const toggleTask = useCallback((taskId: string, isDone: boolean) => {
+        tasksAPI.toggle(taskId, isDone)
+            .then(() => {
+                setTasks((prevTasks) => (
+                    prevTasks.map((prevTask) => {
+                        if (prevTask.id === taskId) {
+                            return {
+                                ...prevTask,
+                                isDone,
+                            }
+                        }
 
-                return prevTask
+                        return prevTask
+                    })
+                ))
             })
-        ))
+            .catch(() => {
+                setErrorRequest('Не удалось изменить состояние задачи!')
+            })
     }, [])
 
     const editTask = useCallback((taskId: string, title: string) => {
@@ -48,26 +55,38 @@ const useTasks = () => {
             return false
         }
 
-        setTasks((prevTasks) => (
-            prevTasks.map((prevTask) => {
-                if (prevTask.id === taskId) {
-                    return {
-                        ...prevTask,
-                        title,
-                    }
-                }
+        tasksAPI.edit(taskId, title)
+            .then(() => {
+                setTasks((prevTasks) => (
+                    prevTasks.map((prevTask) => {
+                        if (prevTask.id === taskId) {
+                            return {
+                                ...prevTask,
+                                title,
+                            }
+                        }
 
-                return prevTask
+                        return prevTask
+                    })
+                ))
             })
-        ))
+            .catch(() => {
+                setErrorRequest('Не удалось отредактировать задачу!')
+            })
 
         return true
     }, [])
 
     const deleteTask = useCallback((taskId: string) => {
-        setTasks((prevTasks) => (
-            prevTasks.filter((prevTask) => prevTask.id !== taskId)
-        ))
+        tasksAPI.delete(taskId)
+            .then(() => {
+                setTasks((prevTasks) => (
+                    prevTasks.filter((prevTask) => prevTask.id !== taskId)
+                ))
+            })
+            .catch(() => {
+                setErrorRequest('Не удалось удалить задачу!')
+            })
     }, [])
 
     const filterTasksBySearch = useMemo(() => {
@@ -79,8 +98,16 @@ const useTasks = () => {
     }, [searchQuery, tasks])
 
     useEffect(() => {
-        saveTasks(tasks)
-    }, [tasks])
+        tasksAPI.getAll()
+            .then(setTasks)
+            .catch(() => {
+                setErrorRequest('Не удалось загрузить задачи!')
+            })
+    }, [])
+
+    const clearError = useCallback(() => {
+        setErrorRequest('')
+    }, [])
 
     return {
         tasks,
@@ -91,6 +118,8 @@ const useTasks = () => {
         editTask,
         deleteTask,
         filterTasksBySearch,
+        errorRequest,
+        clearError,
     }
 }
 

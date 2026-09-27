@@ -1,22 +1,18 @@
-import type {Task} from '../types'
-import { useState, memo, useContext } from 'react'
-import clsx from 'clsx'
-import { TasksContext } from '../context/TasksContext'
+import {memo, useContext} from 'react'
+import {TasksContext} from '../context/TasksContext'
 
 type TodoItemProps = {
-    task: Task,
+    id: string,
+    title: string,
+    isDone: boolean,
 }
 
 const TodoItem = (props: TodoItemProps) => {
     const {
-        task,
-    } = props
-
-    const {
         id,
         title,
         isDone,
-    } = task
+    } = props
 
     const context = useContext(TasksContext)
 
@@ -32,14 +28,6 @@ const TodoItem = (props: TodoItemProps) => {
         setEditingTaskId,
     } = context
 
-    const [isDeletingTask, setIsDeletingTask] = useState<boolean>(false)
-
-    const onTransitionEnd = () => {
-        if (isDeletingTask) {
-            deleteTask(id)
-        }
-    }
-
     const onEditClick = () => {
         setIsDialogOpen(true)
         setNewTaskTitle(title)
@@ -48,17 +36,14 @@ const TodoItem = (props: TodoItemProps) => {
 
     return (
         <li
-            className={clsx("todo__item todo-item", {
-                'is-disappearing': isDeletingTask,
-            })}
-            onTransitionEnd={onTransitionEnd}
+            className="todo__item todo-item"
         >
             <input
                 id={id}
                 className="todo-item__checkbox"
                 type="checkbox"
                 checked={isDone}
-                onChange={() => toggleTask(id)}
+                onChange={({target}) => toggleTask(id, target.checked)}
             />
             <label
                 htmlFor={id}
@@ -85,7 +70,7 @@ const TodoItem = (props: TodoItemProps) => {
                     type="button"
                     aria-label="Delete task"
                     title="Delete task"
-                    onClick={() => setIsDeletingTask(true)}
+                    onClick={() => deleteTask(id)}
                 >
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path

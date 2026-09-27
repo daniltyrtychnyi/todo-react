@@ -4,7 +4,7 @@ const useTaskDialog = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [newTaskTitle, setNewTaskTitle] = useState('')
     const [editingTaskId, setEditingTaskId] = useState<string | null>(null)
-    const [error, setError] = useState('')
+    const [formError, setFormError] = useState('')
 
     const fieldInputRef = useRef<HTMLInputElement>(null)
 
@@ -12,7 +12,7 @@ const useTaskDialog = () => {
         setIsDialogOpen(false)
         setNewTaskTitle('')
         setEditingTaskId(null)
-        setError('')
+        setFormError('')
     }, [])
 
     return {
@@ -22,8 +22,8 @@ const useTaskDialog = () => {
         setNewTaskTitle,
         editingTaskId,
         setEditingTaskId,
-        error,
-        setError,
+        formError,
+        setFormError,
         fieldInputRef,
         closeDialog,
     }

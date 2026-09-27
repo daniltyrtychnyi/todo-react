@@ -19,7 +19,7 @@ const TodoList = () => {
         <ul className="todo__list">
             {(filterTasksBySearch ?? tasks).map((task) => (
                 <TodoItem
-                    task={task}
+                    {...task}
                     key={task.id}
                 />
             ))}

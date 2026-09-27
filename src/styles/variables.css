@@ -8,9 +8,9 @@
     --color-accent-light: #C3C1E5;
     --color-red: #E50000;
 
-    --color-bg: var(--color-light);
+    --color-bg: var(--color-dark);
     
-    --color-text: var(--color-dark);
+    --color-text: var(--color-light);
 
     --color-field: var(--color-accent-light);
     --color-field-text: var(--color-accent);

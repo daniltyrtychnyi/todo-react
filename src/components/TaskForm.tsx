@@ -18,8 +18,8 @@ const TaskForm = () => {
         editingTaskId,
         closeDialog,
         fieldInputRef,
-        error,
-        setError,
+        formError,
+        setFormError,
     } = context
 
     const onSubmit = (event: SubmitEvent) => {
@@ -46,7 +46,7 @@ const TaskForm = () => {
         const isOnlySpaces = clearValue.length === 0 && value.length > 0
 
         setNewTaskTitle(value)
-        setError(isOnlySpaces ? 'The task field cannot be empty.' : '')
+        setFormError(isOnlySpaces ? 'The task field cannot be empty.' : '')
     }
 
     return (
@@ -58,7 +58,7 @@ const TaskForm = () => {
                 id="new-task"
                 label="Input your note..."
                 value={newTaskTitle}
-                error={error}
+                error={formError}
                 onChange={onChange}
                 ref={fieldInputRef}
             />
