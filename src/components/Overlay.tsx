@@ -43,10 +43,12 @@ export default memo(() => {
             onClick={outsideClick}
             ref={dialogRef}
         >
-            <h2 className="overlay__title" id="new-task-title">
-                {editingTaskId ? 'Edit note' : 'New Note'}
-            </h2>
-            <TaskForm />
+            <div className="overlay__wrapper">
+                <h2 className="overlay__title" id="new-task-title">
+                    {editingTaskId ? 'Edit note' : 'New Note'}
+                </h2>
+                <TaskForm />
+            </div>
         </dialog>
     )
 })
