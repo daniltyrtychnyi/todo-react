@@ -1,4 +1,3 @@
-import '../styles/components/field.css'
 import type { ChangeEvent, RefObject } from 'react'
 
 type FieldProps = {

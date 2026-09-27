@@ -1,4 +1,3 @@
-import '../styles/components/overlay.css'
 import {useRef, useEffect, memo, useContext} from 'react'
 import TaskForm from './TaskForm'
 import type { MouseEvent } from 'react'

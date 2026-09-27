@@ -1,5 +1,3 @@
-import '../styles/components/select.css'
-
 export default () => {
     return (
         <div className="select">

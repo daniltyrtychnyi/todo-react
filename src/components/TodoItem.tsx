@@ -1,4 +1,3 @@
-import '../styles/components/todo-item.css'
 import type {Task} from '../types'
 import { useState, memo, useContext } from 'react'
 import clsx from 'clsx'
