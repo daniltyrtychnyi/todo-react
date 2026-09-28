@@ -21,12 +21,12 @@ const useTasks = () => {
             .then((addedTask: Task) => {
                 setTasks((prevTasks) => [...prevTasks, addedTask])
                 setSearchQuery('')
+
+                return true
             })
             .catch(() => {
-                setErrorRequest('Не удалось добавить задачу!')
+                setErrorRequest('Failed to add the task!')
             })
-
-        return true
     }, [])
 
     const toggleTask = useCallback((taskId: string, isDone: boolean) => {
@@ -46,7 +46,7 @@ const useTasks = () => {
                 ))
             })
             .catch(() => {
-                setErrorRequest('Не удалось изменить состояние задачи!')
+                setErrorRequest('It was not possible to change the task status!')
             })
     }, [])
 
@@ -71,7 +71,7 @@ const useTasks = () => {
                 ))
             })
             .catch(() => {
-                setErrorRequest('Не удалось отредактировать задачу!')
+                setErrorRequest('Failed to edit the task!')
             })
 
         return true
@@ -85,7 +85,7 @@ const useTasks = () => {
                 ))
             })
             .catch(() => {
-                setErrorRequest('Не удалось удалить задачу!')
+                setErrorRequest('Failed to delete the task!')
             })
     }, [])
 
@@ -101,7 +101,7 @@ const useTasks = () => {
         tasksAPI.getAll()
             .then(setTasks)
             .catch(() => {
-                setErrorRequest('Не удалось загрузить задачи!')
+                setErrorRequest('Failed to load the tasks!')
             })
     }, [])
 

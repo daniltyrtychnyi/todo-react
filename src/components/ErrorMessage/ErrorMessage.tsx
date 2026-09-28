@@ -1,18 +1,12 @@
-import {useContext, useEffect} from 'react'
-import {TasksContext} from '../../context/TasksContext'
+import {useEffect} from 'react'
+import { useTasksContext } from '../../context/TasksContext'
 import styles from './ErrorMessage.module.scss'
 
 const ErrorMessage = () => {
-    const context = useContext(TasksContext)
-
-    if (!context) {
-        throw new Error('TasksContext must be used in TasksProvider')
-    }
-
     const {
         errorRequest,
         clearError,
-    } = context
+    } = useTasksContext()
 
     const title = 'Закрыть'
 

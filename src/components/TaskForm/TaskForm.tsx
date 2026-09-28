@@ -1,16 +1,10 @@
 import Field from '../Field/Field'
 import Button from '../Button'
-import {useContext} from 'react'
 import type {SubmitEvent, ChangeEvent} from 'react'
-import {TasksContext} from '../../context/TasksContext'
+import { useTasksContext } from '../../context/TasksContext'
 import styles from './TaskForm.module.scss'
 
 const TaskForm = () => {
-    const context = useContext(TasksContext)
-
-    if (!context) {
-        throw new Error('TasksContext must be used with in TasksProvider')
-    }
 
     const {
         newTaskTitle,
@@ -22,7 +16,7 @@ const TaskForm = () => {
         fieldInputRef,
         formError,
         setFormError,
-    } = context
+    } = useTasksContext()
 
     const onSubmit = (event: SubmitEvent) => {
         event.preventDefault()

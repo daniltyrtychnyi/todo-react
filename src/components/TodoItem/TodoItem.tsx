@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import {memo, useContext} from 'react'
-import {TasksContext} from '../../context/TasksContext'
+import {memo} from 'react'
+import {useTasksContext} from '../../context/TasksContext'
 import styles from './TodoItem.module.scss'
 
 type TodoItemProps = {
@@ -18,19 +18,13 @@ const TodoItem = (props: TodoItemProps) => {
         isDone,
     } = props
 
-    const context = useContext(TasksContext)
-
-    if (!context) {
-        throw new Error('TasksContext must be used in TasksProvider')
-    }
-
     const {
         deleteTask,
         setIsDialogOpen,
         toggleTask,
         setNewTaskTitle,
         setEditingTaskId,
-    } = context
+    } = useTasksContext()
 
     const onEditClick = () => {
         setIsDialogOpen(true)

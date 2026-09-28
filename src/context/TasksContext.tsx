@@ -1,5 +1,5 @@
-import { createContext } from 'react'
-import type { ReactNode, RefObject, Dispatch, SetStateAction } from 'react'
+import {createContext, useContext} from 'react'
+import type {ReactNode, RefObject, Dispatch, SetStateAction} from 'react'
 import type {Task} from '../types'
 import useTasks from '../hooks/useTasks'
 import useTaskDialog from '../hooks/useTaskDialog'
@@ -91,4 +91,14 @@ export const TasksProvider = (props: TasksProviderProps) => {
             {children}
         </TasksContext.Provider>
     )
+}
+
+export const useTasksContext = () => {
+    const context = useContext(TasksContext)
+
+    if (!context) {
+        throw new Error('useTasksContext must be used within TasksProvider')
+    }
+
+    return context
 }

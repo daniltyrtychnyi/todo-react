@@ -2,22 +2,16 @@ import TodoControls from '../TodoControls'
 import TodoList from '../TodoList'
 import Button from '../Button'
 import clsx from 'clsx'
-import {memo, useContext} from 'react'
-import {TasksContext} from '../../context/TasksContext'
+import {memo} from 'react'
+import { useTasksContext } from '../../context/TasksContext'
 import styles from './Todo.module.scss'
 
 const Todo = () => {
-    const context = useContext(TasksContext)
-
-    if (!context) {
-        throw new Error('TasksContext must be used with in TasksProvider')
-    }
-
     const {
         tasks,
         setIsDialogOpen,
         filterTasksBySearch,
-    } = context
+    } = useTasksContext()
 
     const isEmpty = filterTasksBySearch?.length === 0 || tasks.length === 0
 

@@ -1,21 +1,16 @@
-import {useRef, useEffect, memo, useContext} from 'react'
+import {useRef, useEffect, memo} from 'react'
 import TaskForm from '../TaskForm/TaskForm'
 import type { MouseEvent } from 'react'
-import {TasksContext} from '../../context/TasksContext'
+import { useTasksContext } from '../../context/TasksContext'
 import styles from './Overlay.module.scss'
 
 const Overlay = () => {
-    const context = useContext(TasksContext)
-
-    if (!context) {
-        throw new Error('TasksContext must be used with in TasksProvider')
-    }
 
     const {
         isDialogOpen,
         closeDialog,
         editingTaskId,
-    } = context
+    } = useTasksContext()
 
     const dialogRef = useRef<HTMLDialogElement>(null)
 

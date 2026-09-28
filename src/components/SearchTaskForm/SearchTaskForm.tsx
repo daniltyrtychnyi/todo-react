@@ -1,19 +1,12 @@
 import Field from '../Field/Field'
-import { useContext } from 'react'
-import { TasksContext } from '../../context/TasksContext'
+import { useTasksContext } from '../../context/TasksContext'
 import styles from './SearchTaskForm.module.scss'
 
 const SearchTaskForm = () => {
-    const context = useContext(TasksContext)
-
-    if (!context) {
-        throw new Error('Tasks')
-    }
-
     const {
         searchQuery,
         setSearchQuery,
-    } = context
+    } = useTasksContext()
 
     return (
         <form className={styles.searchTaskForm}>
