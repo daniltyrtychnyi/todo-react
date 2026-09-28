@@ -1,0 +1,11 @@
+.todoControls {
+  display: flex;
+  column-gap: 16px;
+  padding-bottom: 30px;
+
+  @media (max-width: 767px) {
+    & {
+      column-gap: 8px;
+    }
+  }
+}

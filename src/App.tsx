@@ -1,7 +1,7 @@
-import Todo from './components/Todo'
-import Overlay from './components/Overlay'
+import Todo from './components/Todo/Todo'
+import Overlay from './components/Overlay/Overlay'
 import { TasksProvider } from './context/TasksContext'
-import ErrorMessage from './components/ErrorMessage'
+import ErrorMessage from './components/ErrorMessage/ErrorMessage'
 
 function App() {
     return (
