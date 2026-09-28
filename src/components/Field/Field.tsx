@@ -1,4 +1,4 @@
-import type { ChangeEvent, RefObject } from 'react'
+import type { ChangeEvent } from 'react'
 import styles from './Field.module.scss'
 
 type FieldProps = {
@@ -8,7 +8,6 @@ type FieldProps = {
     value: string,
     error?: string,
     onChange: (event: ChangeEvent<HTMLInputElement>) => void,
-    ref?: RefObject<HTMLInputElement | null>,
 }
 
 const Field = (props: FieldProps) => {
@@ -19,7 +18,6 @@ const Field = (props: FieldProps) => {
         value,
         error,
         onChange,
-        ref,
     } = props
 
     return (
@@ -38,7 +36,6 @@ const Field = (props: FieldProps) => {
                 autoComplete="off"
                 value={value}
                 onChange={onChange}
-                ref={ref}
             />
             {error && (
                 <span

@@ -17,28 +17,6 @@
   margin-bottom: 18px;
 }
 
-.emptyWrapper {
-  font-size: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  row-gap: 20px;
-  transition-duration: var(--transition-duration);
-
-  &::before {
-    content: '';
-    width: 221px;
-    height: 174px;
-    background: var(--empty-message-image) center/contain no-repeat;
-  }
-
-  &:not(.isVisible) {
-    opacity: 0;
-    visibility: hidden;
-    translate: 0 50%;
-  }
-}
-
 .newTaskButton {
   position: fixed;
   top: 85%;

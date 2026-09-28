@@ -4,3 +4,24 @@
   width: 100%;
   max-width: 525px;
 }
+
+.emptyWrapper {
+  font-weight: 400;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 20px;
+
+  &::before {
+    content: '';
+    width: 221px;
+    height: 174px;
+    background: var(--empty-message-image) center/contain no-repeat;
+  }
+
+  &:not(.isVisible) {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

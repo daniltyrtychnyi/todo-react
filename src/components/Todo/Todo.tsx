@@ -1,19 +1,14 @@
 import TodoControls from '../TodoControls'
 import TodoList from '../TodoList'
 import Button from '../Button'
-import clsx from 'clsx'
 import {memo} from 'react'
-import { useTasksContext } from '../../context/TasksContext'
+import {useTasksContext} from '../../context/TasksContext'
 import styles from './Todo.module.scss'
 
 const Todo = () => {
     const {
-        tasks,
         setIsDialogOpen,
-        filterTasksBySearch,
     } = useTasksContext()
-
-    const isEmpty = filterTasksBySearch?.length === 0 || tasks.length === 0
 
     const onClick = () => {
         setIsDialogOpen(true)
@@ -26,12 +21,6 @@ const Todo = () => {
             </h1>
             <TodoControls/>
             <TodoList/>
-            <div className={clsx(styles.emptyWrapper, {
-                [styles.isVisible]: isEmpty,
-            })}
-            >
-                {isEmpty && 'Empty...'}
-            </div>
             <Button
                 className={styles.newTaskButton}
                 variant="circle"

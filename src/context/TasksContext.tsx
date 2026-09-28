@@ -1,5 +1,5 @@
 import {createContext, useContext} from 'react'
-import type {ReactNode, RefObject, Dispatch, SetStateAction} from 'react'
+import type {ReactNode, Dispatch, SetStateAction} from 'react'
 import type {Task} from '../types'
 import useTasks from '../hooks/useTasks'
 import useTaskDialog from '../hooks/useTaskDialog'
@@ -8,9 +8,9 @@ type TasksContextValue = {
     tasks: Task[],
     searchQuery: string,
     setSearchQuery: Dispatch<SetStateAction<string>>,
-    addTask: (title: string) => boolean,
+    addTask: (title: string) => void,
     toggleTask: (taskId: string, isDone: boolean) => void,
-    editTask: (taskId: string, title: string) => boolean,
+    editTask: (taskId: string, title: string) => void,
     deleteTask: (taskId: string) => void,
     filterTasksBySearch: Task[] | null,
     errorRequest: string,
@@ -23,8 +23,8 @@ type TasksContextValue = {
     setEditingTaskId: Dispatch<SetStateAction<string | null>>,
     formError: string,
     setFormError: Dispatch<SetStateAction<string>>,
-    fieldInputRef: RefObject<HTMLInputElement | null>,
     closeDialog: () => void,
+    isLoading: boolean,
 }
 
 type TasksProviderProps = {
@@ -47,6 +47,7 @@ export const TasksProvider = (props: TasksProviderProps) => {
         filterTasksBySearch,
         errorRequest,
         clearError,
+        isLoading,
     } = useTasks()
 
     const {
@@ -58,7 +59,6 @@ export const TasksProvider = (props: TasksProviderProps) => {
         setEditingTaskId,
         formError,
         setFormError,
-        fieldInputRef,
         closeDialog,
     } = useTaskDialog()
 
@@ -84,8 +84,8 @@ export const TasksProvider = (props: TasksProviderProps) => {
                 setEditingTaskId,
                 formError,
                 setFormError,
-                fieldInputRef,
                 closeDialog,
+                isLoading,
             }}
         >
             {children}

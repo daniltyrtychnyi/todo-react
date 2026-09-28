@@ -1,12 +1,10 @@
-import { useRef, useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 
 const useTaskDialog = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [newTaskTitle, setNewTaskTitle] = useState('')
     const [editingTaskId, setEditingTaskId] = useState<string | null>(null)
     const [formError, setFormError] = useState('')
-
-    const fieldInputRef = useRef<HTMLInputElement>(null)
 
     const closeDialog = useCallback(() => {
         setIsDialogOpen(false)
@@ -24,7 +22,6 @@ const useTaskDialog = () => {
         setEditingTaskId,
         formError,
         setFormError,
-        fieldInputRef,
         closeDialog,
     }
 }

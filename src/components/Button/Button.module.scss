@@ -16,19 +16,26 @@
     pointer-events: none;
   }
 
-  @media (hover: hover) {
-    &:active,
-    &:hover {
-      background-color: var(--color-accent-dark);
-      border-color: var(--color-accent);
-      scale: 1.05;
+  &:not(:disabled) {
+    @media (hover: hover) {
+      &:active,
+      &:hover {
+        background-color: var(--color-accent-dark);
+        border-color: var(--color-accent);
+        scale: 1.05;
+      }
+    }
+
+    @media (hover: none) {
+      &:active {
+        scale: 1.05;
+      }
     }
   }
 
-  @media (hover: none) {
-    &:active {
-      scale: 1.05;
-    }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 

@@ -6,10 +6,11 @@ const useTasks = () => {
     const [tasks, setTasks] = useState<Task[]>([])
     const [searchQuery, setSearchQuery] = useState('')
     const [errorRequest, setErrorRequest] = useState('')
+    const [isLoading, setIsLoading] = useState(true)
 
     const addTask = useCallback((title: string) => {
         if (title.length === 0) {
-            return false
+            return
         }
 
         const newTask = {
@@ -21,8 +22,6 @@ const useTasks = () => {
             .then((addedTask: Task) => {
                 setTasks((prevTasks) => [...prevTasks, addedTask])
                 setSearchQuery('')
-
-                return true
             })
             .catch(() => {
                 setErrorRequest('Failed to add the task!')
@@ -51,10 +50,6 @@ const useTasks = () => {
     }, [])
 
     const editTask = useCallback((taskId: string, title: string) => {
-        if (title.length === 0) {
-            return false
-        }
-
         tasksAPI.edit(taskId, title)
             .then(() => {
                 setTasks((prevTasks) => (
@@ -73,8 +68,6 @@ const useTasks = () => {
             .catch(() => {
                 setErrorRequest('Failed to edit the task!')
             })
-
-        return true
     }, [])
 
     const deleteTask = useCallback((taskId: string) => {
@@ -103,6 +96,7 @@ const useTasks = () => {
             .catch(() => {
                 setErrorRequest('Failed to load the tasks!')
             })
+            .finally(() => setIsLoading(false))
     }, [])
 
     const clearError = useCallback(() => {
@@ -120,6 +114,7 @@ const useTasks = () => {
         filterTasksBySearch,
         errorRequest,
         clearError,
+        isLoading,
     }
 }
 

@@ -1,7 +1,7 @@
 import Field from '../Field/Field'
 import Button from '../Button'
 import type {SubmitEvent, ChangeEvent} from 'react'
-import { useTasksContext } from '../../context/TasksContext'
+import {useTasksContext} from '../../context/TasksContext'
 import styles from './TaskForm.module.scss'
 
 const TaskForm = () => {
@@ -13,24 +13,19 @@ const TaskForm = () => {
         editTask,
         editingTaskId,
         closeDialog,
-        fieldInputRef,
         formError,
         setFormError,
     } = useTasksContext()
 
+    const clearTitle = newTaskTitle.trim()
+
     const onSubmit = (event: SubmitEvent) => {
         event.preventDefault()
 
-        const clearTitle = newTaskTitle.trim()
-
-        const success = editingTaskId
-            ? editTask(editingTaskId, clearTitle)
-            : addTask(clearTitle)
-
-        if (!success) {
-            fieldInputRef.current?.focus()
-
-            return
+        if (editingTaskId) {
+            editTask(editingTaskId, clearTitle)
+        } else {
+            addTask(clearTitle)
         }
 
         closeDialog()
@@ -56,7 +51,6 @@ const TaskForm = () => {
                 value={newTaskTitle}
                 error={formError}
                 onChange={onChange}
-                ref={fieldInputRef}
             />
             <div className={styles.actions}>
                 <Button
@@ -67,6 +61,7 @@ const TaskForm = () => {
                 <Button
                     type="submit"
                     title="Apply"
+                    isDisabled={clearTitle.length === 0}
                 />
             </div>
         </form>

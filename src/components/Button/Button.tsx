@@ -11,6 +11,7 @@ type ButtonProps = {
     onClick?: () => void,
     hasIcon?: boolean,
     title?: string,
+    isDisabled?: boolean,
 }
 
 const Button = (props: ButtonProps) => {
@@ -23,6 +24,7 @@ const Button = (props: ButtonProps) => {
         onClick,
         hasIcon = false,
         title,
+        isDisabled,
     } = props
 
     return (
@@ -36,6 +38,7 @@ const Button = (props: ButtonProps) => {
             aria-label={label}
             title={label}
             onClick={onClick}
+            disabled={isDisabled}
         >
             {hasIcon && (
                 <span className={styles.icon}>
