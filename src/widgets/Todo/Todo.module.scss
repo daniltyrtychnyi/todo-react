@@ -1,0 +1,36 @@
+.todo {
+  display: grid;
+  padding: 40px 10px;
+  width: 100%;
+  max-width: 770px;
+
+  @include mobile {
+    padding: 20px;
+  }
+}
+
+.title {
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.controls {
+  display: flex;
+  column-gap: 16px;
+  padding-bottom: 30px;
+
+  @include mobile {
+    column-gap: 8px;
+  }
+}
+
+.newTaskButton {
+  position: fixed;
+  top: 85%;
+  justify-self: end;
+
+  * {
+    pointer-events: none;
+  }
+}
