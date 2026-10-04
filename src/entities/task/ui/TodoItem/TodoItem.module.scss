@@ -1,0 +1,124 @@
+.todoItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  column-gap: 17px;
+
+  &:first-child,
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba(108, 99, 255, 0.5);
+    padding-bottom: 10px;
+  }
+
+  &:not(:first-child) {
+    padding-top: 10px;
+  }
+
+  @include hover {
+    .actions {
+      opacity: 1;
+    }
+
+    &.isDisappearing {
+      opacity: 0;
+      translate: 0 -65%;
+      transition-duration: calc(var(--transition-duration) * 2);
+      pointer-events: none;
+
+      & ~ .todoItem {
+        translate: 0 -100%;
+        transition-delay: var(--transition-duration);
+        transition-duration: var(--transition-duration);
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+.checkbox {
+  flex-shrink: 0;
+  appearance: none;
+  position: relative;
+  margin: 0;
+  width: 26px;
+  height: 26px;
+  border: var(--border);
+  border-radius: 2px;
+
+  &:not(:checked) {
+    &::after {
+      opacity: 0;
+    }
+  }
+
+  &:checked {
+    background-color: var(--color-accent);
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: -50% -50%;
+      width: 18px;
+      height: 18px;
+      background: url('@/shared/assets/icons/icon-check_white.svg') center/contain no-repeat;
+    }
+
+    & + .label {
+      text-decoration: line-through;
+      color: var(--color-grey);
+    }
+  }
+}
+
+.label {
+  width: 100%;
+  font-size: 20px;
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+}
+
+.actions {
+  opacity: 0;
+  display: flex;
+  column-gap: 10px;
+  margin-left: auto;
+  transition-duration: var(--transition-duration);
+
+  @media (hover: none) {
+    opacity: 1;
+  }
+}
+
+.editButton,
+.deleteButton {
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  color: var(--color-grey);
+
+  * {
+    pointer-events: none;
+  }
+
+  @include hover {
+    scale: 1.05;
+  }
+}
+
+.editButton {
+  @include hover {
+    color: var(--color-accent);
+  }
+}
+
+.deleteButton {
+  @include hover {
+    color: var(--color-red);
+  }
+}

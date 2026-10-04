@@ -1,0 +1,16 @@
+.loader {
+  display: flex;
+  margin-inline: auto;
+  width: 100px;
+  height: 100px;
+  border: 3px solid var(--color-accent-light);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin calc(var(--transition-duration) * 4) linear infinite;
+
+  @keyframes spin {
+    from {
+      rotate: -360deg;
+    }
+  }
+}
