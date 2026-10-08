@@ -19,6 +19,8 @@ const request = <T>(url: string, options?: RequestInit): Promise<T> => {
 const tasksAPI = {
     getAll: () => request<Task[]>(API_URL),
 
+    getById: (id: string) => request<Task>(`${API_URL}/${id}`),
+
     add: (task: Omit<Task, 'id'>) => {
         return request<Task>(API_URL, {
             method: 'POST',

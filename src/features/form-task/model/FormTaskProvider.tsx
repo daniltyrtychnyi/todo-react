@@ -1,25 +1,10 @@
-import { createContext, useContext } from 'react'
-import type { Dispatch, SetStateAction, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import useFormDialog from './useFormDialog'
-
-type FormTaskContext = {
-    isDialogOpen: boolean,
-    newTaskTitle: string,
-    setNewTaskTitle: Dispatch<SetStateAction<string>>
-    editingTaskId: string | null,
-    formError: string,
-    setFormError: Dispatch<SetStateAction<string>>,
-    openDialog: () => void,
-    openEditDialog: (id: string, title: string) => void,
-    closeDialog: () => void,
-}
+import FormTaskContext from './FormTaskContext'
 
 type FormTaskProviderProps = {
     children: ReactNode,
 }
-
-const FormTaskContext = createContext<FormTaskContext | undefined>(undefined)
-
 export const FormTaskProvider = (props: FormTaskProviderProps) => {
     const { children } = props
 
@@ -54,12 +39,4 @@ export const FormTaskProvider = (props: FormTaskProviderProps) => {
     )
 }
 
-export const useFormTaskContext = () => {
-    const context = useContext(FormTaskContext)
-
-    if (!context) {
-        throw new Error('useFormTaskContext must be used within FormTaskProvider')
-    }
-
-    return context
-}
+export default FormTaskProvider

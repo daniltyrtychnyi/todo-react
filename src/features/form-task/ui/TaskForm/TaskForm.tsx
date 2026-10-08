@@ -3,7 +3,7 @@ import { useTasksContext } from '@/entities/task'
 import Field from '@/shared/ui/Field'
 import Button from '@/shared/ui/Button'
 import styles from './TaskForm.module.scss'
-import {useFormTaskContext} from '../../model/FormTaskContext'
+import useFormTaskContext from '../../model/useFormTaskContext'
 
 const TaskForm = () => {
     const {

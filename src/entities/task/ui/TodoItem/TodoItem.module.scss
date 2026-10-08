@@ -65,19 +65,22 @@
       background: url('@/shared/assets/icons/icon-check_white.svg') center/contain no-repeat;
     }
 
-    & + .label {
+    & + .link {
       text-decoration: line-through;
       color: var(--color-grey);
     }
   }
 }
 
-.label {
+.link {
   width: 100%;
   font-size: 20px;
   text-transform: uppercase;
-  pointer-events: none;
-  user-select: none;
+  color: inherit;
+
+  @include hover {
+    opacity: 0.7;
+  }
 }
 
 .actions {

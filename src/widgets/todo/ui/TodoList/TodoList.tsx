@@ -1,7 +1,7 @@
-import clsx from 'clsx'
 import { memo } from 'react'
 import {useFormTaskContext} from '@/features/form-task'
 import { useTasksContext, TodoItem } from '@/entities/task'
+import EmptyMessage from '@/shared/ui/EmptyMessage'
 import styles from './TodoList.module.scss'
 
 const TodoList = () => {
@@ -16,17 +16,12 @@ const TodoList = () => {
         openEditDialog,
     } = useFormTaskContext()
 
-    const isEmpty = filterTasksBySearch?.length === 0 || tasks.length === 0
+    const hasTasks = filterTasksBySearch ?? tasks
 
-    if (isEmpty) {
-        return (
-            <div className={clsx(styles.emptyWrapper, {
-                [styles.isVisible]: isEmpty,
-            })}
-            >
-                Empty...
-            </div>
-        )
+    if (hasTasks.length === 0) {
+        const isFilterTasksEmpty = tasks.length > 0
+
+        return <EmptyMessage label={isFilterTasksEmpty ? 'No tasks found' : 'No tasks yet'} />
     }
 
     return (

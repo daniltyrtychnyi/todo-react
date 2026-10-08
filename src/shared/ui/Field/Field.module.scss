@@ -33,11 +33,13 @@
   background-color: transparent;
   border-radius: var(--border-radius);
   border: var(--border-field);
+  outline: 2px solid transparent;
 
   &:hover,
-  &:focus {
+  &:focus-visible {
+    outline-style: solid;
+    outline-color: var(--color-field);
     outline-offset: 0;
-    outline: 2px solid var(--color-field);
   }
 
   &[type="search"] {

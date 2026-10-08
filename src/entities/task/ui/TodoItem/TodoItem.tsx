@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import { memo } from 'react'
+import RouterLink from '@/shared/ui/RouterLink'
 import styles from './TodoItem.module.scss'
 
 type TodoItemProps = {
@@ -36,10 +37,13 @@ const TodoItem = (props: TodoItemProps) => {
             />
             <label
                 htmlFor={id}
-                className={styles.label}
+                className="visually-hidden"
             >
                 {title}
             </label>
+            <RouterLink className={styles.link} to={`/tasks/${id}`} aria-label="Open details for task">
+                {title}
+            </RouterLink>
             <div className={styles.actions}>
                 <button
                     className={styles.editButton}

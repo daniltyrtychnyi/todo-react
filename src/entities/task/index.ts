@@ -1,3 +1,5 @@
-export { TasksProvider, useTasksContext } from './model/TasksContext'
+export { default as tasksAPI } from './api/tasks'
+export { default as TasksProvider } from './model/TasksProvider'
+export { default as useTasksContext } from './model/useTasksContext'
 export type { Task } from './model/types'
 export { default as TodoItem } from './ui/TodoItem'

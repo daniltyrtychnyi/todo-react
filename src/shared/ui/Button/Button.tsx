@@ -4,6 +4,7 @@ import styles from './Button.module.scss'
 
 type ButtonProps = {
     className?: string,
+    href?: string,
     variant?: 'switcher' | 'circle' | 'transparent',
     type?: 'button' | 'submit',
     label?: string,
@@ -15,6 +16,7 @@ type ButtonProps = {
 const Button = (props: ButtonProps) => {
     const {
         className,
+        href,
         variant,
         type = 'button',
         label,
@@ -23,13 +25,17 @@ const Button = (props: ButtonProps) => {
         isDisabled,
     } = props
 
+    const isLink = href === undefined
+    const Component = isLink ? 'button' : 'a'
+
     return (
-        <button
+        <Component
             className={clsx(
                 className,
                 styles.button,
                 variant && styles[variant],
             )}
+            href={href}
             type={type}
             aria-label={label}
             title={label}
@@ -37,7 +43,7 @@ const Button = (props: ButtonProps) => {
             disabled={isDisabled}
         >
             {children}
-        </button>
+        </Component>
     )
 }
 

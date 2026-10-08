@@ -1,17 +1,18 @@
-import { Todo } from '@/widgets/todo'
-import { Overlay } from '@/widgets/overlay'
-import { TasksProvider } from '@/entities/task'
-import { FormTaskProvider } from '@/features/form-task'
+import HomePage from '@/pages/home'
+import TaskDetailsPage from '@/pages/task-details'
+import NotFoundPage from '@/pages/not-found'
+import Router from './routing'
 import './styles'
 
 const App = () => {
+    const routes = {
+        '/': HomePage,
+        '/tasks/:id': TaskDetailsPage,
+        '*': NotFoundPage,
+    }
+
     return (
-        <TasksProvider>
-            <FormTaskProvider>
-                <Todo/>
-                <Overlay/>
-            </FormTaskProvider>
-        </TasksProvider>
+        <Router routes={routes} />
     )
 }
 

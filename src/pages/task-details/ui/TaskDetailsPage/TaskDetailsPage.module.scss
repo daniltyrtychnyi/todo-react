@@ -1,0 +1,12 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.actions {
+  display: flex;
+  column-gap: 15px;
+}
