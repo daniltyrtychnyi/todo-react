@@ -10,6 +10,7 @@ const TodoList = () => {
         filterTasksBySearch,
         toggleTask,
         deleteTask,
+        disappearingTaskId,
     } = useTasksContext()
 
     const {
@@ -32,6 +33,7 @@ const TodoList = () => {
                     onToggle={toggleTask}
                     onDelete={deleteTask}
                     onEdit={openEditDialog}
+                    isDisappearing={disappearingTaskId}
                     key={task.id}
                 />
             ))}

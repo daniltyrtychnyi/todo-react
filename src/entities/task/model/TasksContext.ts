@@ -14,6 +14,7 @@ type TasksContextValue = {
     errorRequest: string,
     clearError: () => void,
     isLoading: boolean,
+    disappearingTaskId: string | null,
 }
 
 const TasksContext = createContext<TasksContextValue | undefined>(undefined)

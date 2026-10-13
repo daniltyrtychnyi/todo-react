@@ -11,6 +11,7 @@ type TodoItemProps = {
     onToggle: (id: string, isDone: boolean) => void,
     onDelete: (id: string) => void,
     onEdit: (id: string, title: string) => void,
+    isDisappearing: string | null,
 }
 
 const TodoItem = (props: TodoItemProps) => {
@@ -22,11 +23,14 @@ const TodoItem = (props: TodoItemProps) => {
         onToggle,
         onDelete,
         onEdit,
+        isDisappearing,
     } = props
 
     return (
         <li
-            className={clsx(styles.todoItem, className)}
+            className={clsx(styles.todoItem, className, {
+                [styles.isDisappearing]: isDisappearing === id,
+            })}
         >
             <input
                 id={id}

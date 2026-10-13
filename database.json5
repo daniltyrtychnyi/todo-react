@@ -1,1 +1,1 @@
-{tasks:[{title:'Task 1',isDone:false,id:'4q9EgLKqZjo'},{title:'Task 2',isDone:true,id:'N0eAZN1uEw8'}],$schema:'./node_modules/json-server/schema.json'}
+{tasks:[],$schema:'./node_modules/json-server/schema.json'}
