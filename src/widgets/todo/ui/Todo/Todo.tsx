@@ -11,6 +11,8 @@ import styles from './Todo.module.scss'
 const Todo = () => {
     const {
         isLoading,
+        selectedFilter,
+        setSelectedFilter,
     } = useTasksContext()
 
     const {
@@ -24,7 +26,7 @@ const Todo = () => {
             </h1>
             <div className={styles.controls}>
                 <SearchTaskForm/>
-                <Select/>
+                <Select selectedFilter={selectedFilter} setSelectedFilter={setSelectedFilter} />
                 <Button
                     variant='switcher'
                     label="Switch theme"

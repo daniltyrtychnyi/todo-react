@@ -44,10 +44,10 @@ const tasksReducer = (state: Task[], action: TasksAction) => {
             )
         }
         case 'EDIT': {
-            const { id, title } = action
+            const {id, title} = action
 
             return state.map((task) =>
-                task.id === id ? { ...task, title } : task
+                task.id === id ? {...task, title} : task
             )
         }
         case 'DELETE': {
@@ -68,6 +68,7 @@ const useTasks = () => {
     const [errorRequest, setErrorRequest] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const [disappearingTaskId, setDisappearingTaskId] = useState<string | null>(null)
+    const [selectedFilter, setSelectedFilter] = useState('all')
 
     const addTask = useCallback((title: string) => {
         if (title.length === 0) {
@@ -102,7 +103,7 @@ const useTasks = () => {
     const editTask = useCallback((taskId: string, title: string) => {
         tasksAPI.edit(taskId, title)
             .then(() => {
-                dispatch({ type: 'EDIT', id: taskId, title })
+                dispatch({type: 'EDIT', id: taskId, title})
             })
             .catch(() => {
                 setErrorRequest('Failed to edit the task!')
@@ -116,7 +117,7 @@ const useTasks = () => {
             .then(() => {
                 setDisappearingTaskId(taskId)
                 setTimeout(() => {
-                    dispatch({ type: 'DELETE', id: taskId })
+                    dispatch({type: 'DELETE', id: taskId})
                     setDisappearingTaskId(null)
                 }, delayDeleteTask)
             })
@@ -125,17 +126,30 @@ const useTasks = () => {
             })
     }, [])
 
-    const filterTasksBySearch = useMemo(() => {
+    const filteredTasks = useMemo(() => {
         const clearSearchQuery = searchQuery.trim().toLowerCase()
 
-        return clearSearchQuery.length > 0
-            ? tasks.filter(({title}) => title.toLowerCase().includes(clearSearchQuery))
-            : null
-    }, [searchQuery, tasks])
+        const filterByStatus = tasks.filter(({ isDone }) => {
+            if (selectedFilter === 'complete') {
+                return isDone
+            }
+            if (selectedFilter === 'incomplete') {
+                return !isDone
+            }
+
+            return true
+        })
+
+        if (clearSearchQuery.length === 0) {
+            return filterByStatus
+        }
+
+        return filterByStatus.filter(({ title }) => title.toLowerCase().includes(clearSearchQuery))
+    }, [searchQuery, tasks, selectedFilter])
 
     useEffect(() => {
         tasksAPI.getAll()
-            .then((tasks: Task[]) => dispatch({ type: 'GET_ALL', tasks }))
+            .then((tasks: Task[]) => dispatch({type: 'GET_ALL', tasks}))
             .catch(() => {
                 setErrorRequest('Failed to load the tasks!')
             })
@@ -154,11 +168,13 @@ const useTasks = () => {
         toggleTask,
         editTask,
         deleteTask,
-        filterTasksBySearch,
+        filteredTasks,
         errorRequest,
         clearError,
         isLoading,
         disappearingTaskId,
+        selectedFilter,
+        setSelectedFilter,
     }
 }
 

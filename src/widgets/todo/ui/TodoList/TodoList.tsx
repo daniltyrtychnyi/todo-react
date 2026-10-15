@@ -7,7 +7,7 @@ import styles from './TodoList.module.scss'
 const TodoList = () => {
     const {
         tasks,
-        filterTasksBySearch,
+        filteredTasks,
         toggleTask,
         deleteTask,
         disappearingTaskId,
@@ -17,9 +17,7 @@ const TodoList = () => {
         openEditDialog,
     } = useFormTaskContext()
 
-    const hasTasks = filterTasksBySearch ?? tasks
-
-    if (hasTasks.length === 0) {
+    if (filteredTasks.length === 0) {
         const isFilterTasksEmpty = tasks.length > 0
 
         return <EmptyMessage label={isFilterTasksEmpty ? 'No tasks found' : 'No tasks yet'} />
@@ -27,7 +25,7 @@ const TodoList = () => {
 
     return (
         <ul className={styles.list}>
-            {(filterTasksBySearch ?? tasks).map((task) => (
+            {filteredTasks.map((task) => (
                 <TodoItem
                     {...task}
                     onToggle={toggleTask}

@@ -10,11 +10,13 @@ type TasksContextValue = {
     toggleTask: (taskId: string, isDone: boolean) => void,
     editTask: (taskId: string, title: string) => void,
     deleteTask: (taskId: string) => void,
-    filterTasksBySearch: Task[] | null,
+    filteredTasks: Task[],
     errorRequest: string,
     clearError: () => void,
     isLoading: boolean,
     disappearingTaskId: string | null,
+    selectedFilter: string,
+    setSelectedFilter: Dispatch<SetStateAction<string>>,
 }
 
 const TasksContext = createContext<TasksContextValue | undefined>(undefined)

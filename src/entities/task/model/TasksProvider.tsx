@@ -18,11 +18,13 @@ const TasksProvider = (props: TasksProviderProps) => {
         toggleTask,
         editTask,
         deleteTask,
-        filterTasksBySearch,
+        filteredTasks,
         errorRequest,
         clearError,
         isLoading,
         disappearingTaskId,
+        selectedFilter,
+        setSelectedFilter,
     } = useTasks()
 
     const value = useMemo(() => ({
@@ -33,11 +35,13 @@ const TasksProvider = (props: TasksProviderProps) => {
         toggleTask,
         editTask,
         deleteTask,
-        filterTasksBySearch,
+        filteredTasks,
         errorRequest,
         clearError,
         isLoading,
         disappearingTaskId,
+        selectedFilter,
+        setSelectedFilter
     }), [
         tasks,
         searchQuery,
@@ -46,11 +50,13 @@ const TasksProvider = (props: TasksProviderProps) => {
         toggleTask,
         editTask,
         deleteTask,
-        filterTasksBySearch,
+        filteredTasks,
         errorRequest,
         clearError,
         isLoading,
         disappearingTaskId,
+        selectedFilter,
+        setSelectedFilter
     ])
 
     return (
